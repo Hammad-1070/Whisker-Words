@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhiskerWords - The Cat Word Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="screen active">
+        <div class="welcome-container">
+            <div class="cat-mascot">
+                <div class="cat-face">
+                    <div class="cat-ears">
+                        <div class="ear left"></div>
+                        <div class="ear right"></div>
+                    </div>
+                    <div class="cat-head">
+                        <div class="cat-eyes">
+                            <div class="eye left"></div>
+                            <div class="eye right"></div>
+                        </div>
+                        <div class="cat-nose"></div>
+                        <div class="cat-mouth"></div>
+                        <div class="cat-whiskers">
+                            <div class="whisker w1"></div>
+                            <div class="whisker w2"></div>
+                            <div class="whisker w3"></div>
+                            <div class="whisker w4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cat-paw waving"></div>
+            </div>
+            <h1 class="game-title">WhiskerWords</h1>
+            <p class="game-subtitle">Save the cat by guessing words!</p>
+            <button class="btn btn--primary btn--lg" id="start-btn">Tap to Start</button>
+        </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="main-menu" class="screen">
+        <div class="menu-container">
+            <h2 class="menu-title">WhiskerWords</h2>
+            <div class="menu-buttons">
+                <button class="btn btn--primary btn--lg" id="play-btn">PLAY</button>
+                <button class="btn btn--secondary btn--lg" id="how-to-play-btn">HOW TO PLAY</button>
+                <button class="btn btn--secondary btn--lg" id="credits-btn">CREDITS</button>
+            </div>
+            <div class="settings-icon" id="sound-toggle">
+                <span class="sound-status">🔊</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mode Selection -->
+    <div id="mode-selection" class="screen">
+        <div class="mode-container">
+            <h2>Choose Game Mode</h2>
+            <div class="mode-options">
+                <div class="mode-card" id="online-mode">
+                    <h3>🌐 ONLINE MODE</h3>
+                    <p>Play with real-time updated word database</p>
+                </div>
+                <div class="mode-card" id="offline-mode">
+                    <h3>📱 OFFLINE MODE</h3>
+                    <p>Play with extensive local word collection</p>
+                </div>
+            </div>
+            <button class="btn btn--outline" id="back-to-menu">Back to Menu</button>
+        </div>
+    </div>
+
+    <!-- Category Selection -->
+    <div id="category-selection" class="screen">
+        <div class="category-container">
+            <h2>Select Category</h2>
+            <div class="category-grid">
+                <div class="category-card" data-category="countries">
+                    <div class="category-icon">🌍</div>
+                    <span>Countries</span>
+                </div>
+                <div class="category-card" data-category="landmarks">
+                    <div class="category-icon">🏛️</div>
+                    <span>Landmarks</span>
+                </div>
+                <div class="category-card" data-category="movies">
+                    <div class="category-icon">🎬</div>
+                    <span>Movies</span>
+                </div>
+                <div class="category-card" data-category="actors">
+                    <div class="category-icon">🎭</div>
+                    <span>Actors</span>
+                </div>
+                <div class="category-card" data-category="historical">
+                    <div class="category-icon">📚</div>
+                    <span>Historical</span>
+                </div>
+                <div class="category-card" data-category="athletes">
+                    <div class="category-icon">🏆</div>
+                    <span>Athletes</span>
+                </div>
+                <div class="category-card" data-category="quotes">
+                    <div class="category-icon">💬</div>
+                    <span>Quotes</span>
+                </div>
+                <div class="category-card" data-category="gaming">
+                    <div class="category-icon">🎮</div>
+                    <span>Gaming</span>
+                </div>
+            </div>
+            <button class="btn btn--outline" id="back-to-mode">Back</button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+        <div class="game-container">
+            <!-- Game Header -->
+            <div class="game-header">
+                <div class="progress-info">
+                    <span>Words: <span id="words-completed">0</span>/10</span>
+                    <span>Lives: <span id="lives-remaining">6</span></span>
+                </div>
+                <button class="btn btn--sm" id="game-sound-toggle">🔊</button>
+            </div>
+
+            <!-- Cat Hanging Area -->
+            <div class="hanging-area">
+                <div class="gallows">
+                    <div class="gallows-base"></div>
+                    <div class="gallows-pole"></div>
+                    <div class="gallows-beam"></div>
+                    <div class="gallows-rope" id="rope"></div>
+                </div>
+                <div class="game-cat" id="game-cat">
+                    <div class="cat-face">
+                        <div class="cat-ears">
+                            <div class="ear left"></div>
+                            <div class="ear right"></div>
+                        </div>
+                        <div class="cat-head">
+                            <div class="cat-eyes">
+                                <div class="eye left"></div>
+                                <div class="eye right"></div>
+                            </div>
+                            <div class="cat-nose"></div>
+                            <div class="cat-mouth"></div>
+                        </div>
+                    </div>
+                    <div class="cat-body"></div>
+                    <div class="cat-legs">
+                        <div class="leg left"></div>
+                        <div class="leg right"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Word Display -->
+            <div class="word-display">
+                <div class="word-blanks" id="word-blanks"></div>
+                <div class="category-hint">Category: <span id="current-category"></span></div>
+            </div>
+
+            <!-- Game Controls -->
+            <div class="game-controls">
+                <button class="btn btn--secondary btn--sm" id="hint-btn">💡 Hint</button>
+                <button class="btn btn--outline btn--sm hidden" id="watch-ad-btn">📺 Watch Ad</button>
+            </div>
+
+            <!-- Alphabet -->
+            <div class="alphabet-container">
+                <div class="alphabet-grid" id="alphabet-grid"></div>
+            </div>
+
+            <!-- Game Actions -->
+            <div class="game-actions">
+                <button class="btn btn--outline" id="quit-game">Quit Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Victory Screen -->
+    <div id="victory-screen" class="screen">
+        <div class="victory-container">
+            <div class="celebration-cat">
+                <div class="cat-face happy">
+                    <div class="cat-ears">
+                        <div class="ear left"></div>
+                        <div class="ear right"></div>
+                    </div>
+                    <div class="cat-head">
+                        <div class="cat-eyes happy">
+                            <div class="eye left"></div>
+                            <div class="eye right"></div>
+                        </div>
+                        <div class="cat-nose"></div>
+                        <div class="cat-mouth happy"></div>
+                    </div>
+                </div>
+                <div class="celebration-text">🎉 FREEDOM! 🎉</div>
+            </div>
+            <h2>CONGRATULATIONS!</h2>
+            <p>You freed the cat by completing 10 words!</p>
+            <div class="victory-actions">
+                <button class="btn btn--primary btn--lg" id="play-again">Play Again</button>
+                <button class="btn btn--secondary" id="victory-menu">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Defeat Screen -->
+    <div id="defeat-screen" class="screen">
+        <div class="defeat-container">
+            <div class="sad-cat">
+                <div class="cat-face sad">
+                    <div class="cat-ears">
+                        <div class="ear left"></div>
+                        <div class="ear right"></div>
+                    </div>
+                    <div class="cat-head">
+                        <div class="cat-eyes sad">
+                            <div class="eye left"></div>
+                            <div class="eye right"></div>
+                        </div>
+                        <div class="cat-nose"></div>
+                        <div class="cat-mouth sad"></div>
+                    </div>
+                </div>
+            </div>
+            <h2>Game Over</h2>
+            <p>The cat couldn't escape this time...</p>
+            <div class="word-reveal">The word was: <span id="revealed-word"></span></div>
+            <div class="defeat-actions">
+                <button class="btn btn--primary btn--lg" id="try-again">Try Again</button>
+                <button class="btn btn--secondary" id="defeat-menu">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- How to Play Screen -->
+    <div id="how-to-play" class="screen">
+        <div class="info-container">
+            <h2>How to Play</h2>
+            <div class="instructions">
+                <div class="instruction">
+                    <h3>🎯 Objective</h3>
+                    <p>Guess words letter by letter to save the cat! Complete 10 words to free the cat completely.</p>
+                </div>
+                <div class="instruction">
+                    <h3>🎮 Gameplay</h3>
+                    <p>Click letters to guess. Each wrong guess brings the cat closer to danger. You have 6 lives per word.</p>
+                </div>
+                <div class="instruction">
+                    <h3>💡 Hints</h3>
+                    <p>Use hints to reveal a random letter, but it costs one life. Use them wisely!</p>
+                </div>
+                <div class="instruction">
+                    <h3>📺 Extra Life</h3>
+                    <p>After 4 mistakes, watch an ad to get one extra life and continue playing.</p>
+                </div>
+                <div class="instruction">
+                    <h3>🏆 Victory</h3>
+                    <p>Complete 10 words successfully to see the cat's celebration animation!</p>
+                </div>
+            </div>
+            <button class="btn btn--primary" id="back-from-help">Got it!</button>
+        </div>
+    </div>
+
+    <!-- Credits Screen -->
+    <div id="credits-screen" class="screen">
+        <div class="credits-container">
+            <h2>Credits</h2>
+            <div class="credits-content">
+                <div class="developer-info">
+                    <h3>👨‍💻 Developer</h3>
+                    <p><strong>Muhammad Hammad Saleem</strong></p>
+                    <p>from Lahore, Pakistan</p>
+                </div>
+                <div class="game-info">
+                    <h3>🎮 Game Info</h3>
+                    <p>WhiskerWords v1.0</p>
+                    <p>A fun word-guessing adventure</p>
+                </div>
+                <div class="special-thanks">
+                    <h3>🙏 Special Thanks</h3>
+                    <p>To all cat lovers who inspired this game!</p>
+                </div>
+            </div>
+            <button class="btn btn--primary" id="back-from-credits">Back to Menu</button>
+        </div>
+    </div>
+
+    <!-- Sound Effect Audio Elements (Hidden) -->
+    <audio id="correct-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBCiHzPDNeysFKH3K8N2QQAoUXrTp66hVFApGn+DyvmEcBC..." type="audio/wav">
+    </audio>
+    <audio id="wrong-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBCiHzPDNeysFKH3K8N2QQAoUXrTp66hVFApGn+DyvmEcBC..." type="audio/wav">
+    </audio>
+
+    <script src="app.js"></script>
+</body>
+</html>
